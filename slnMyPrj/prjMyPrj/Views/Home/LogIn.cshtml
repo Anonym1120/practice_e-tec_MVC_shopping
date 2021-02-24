@@ -1,0 +1,23 @@
+﻿
+@{
+    ViewBag.Title = "LogIn";
+}
+
+
+
+<h2>LogIn</h2>
+
+@using (Html.BeginForm("LogIn", "Home", FormMethod.Post))
+{
+    <div>
+        <div>
+            <p>帳號 : @Html.TextBox("fUserId")</p>
+            <p>密碼 : @Html.Password("fPassword")</p>
+            <div class="col-md-offset-2">
+                <p><input type="submit" value="登入" align="right" /></p>
+            </div>
+        </div>
+    </div>
+
+}
+
