@@ -5,6 +5,7 @@ using System.Web;
 using System.Web.Mvc;
 
 using prjMyPrj.Models;
+using prjMyPrj.ViewModels;
 
 namespace prjMyPrj.Controllers
 {
@@ -14,6 +15,7 @@ namespace prjMyPrj.Controllers
 
         public ActionResult SignOut()
         {
+            Session.Clear();
             return RedirectToAction("Index");
         }
 
@@ -25,14 +27,34 @@ namespace prjMyPrj.Controllers
         }
 
         [HttpPost]
-        public ActionResult LogIn(tMember m)
+        public ActionResult LogIn(CLoginViewModel login)
         {
-            
-            return View();
+            string userId = login.fUserId;
+            string password = login.fPassword;
+
+            var member = db.tMember
+                .Where(m => m.fUserId == userId && m.fPassword == password)
+                .FirstOrDefault();
+
+            var user = Session[CDictionary.SK_LOGINED_USER] as tMember;
+
+            if (member == null)
+            {
+                ViewBag.Message = "請重新輸入帳號密碼";
+                return View();
+            }
+            Session[CDictionary.SK_LOGINED_USER] = user;
+
+            return RedirectToAction("Index");
         }
         public ActionResult Index()
         {
-            var list = db.tProduct.ToList();
+            var table = db.tProduct.ToList();
+            List<CProduct> list = new List<CProduct>();
+            foreach (tProduct p in table) 
+            {
+                list.Add(new CProduct(p));
+            }
             return View(list);
         }
 
