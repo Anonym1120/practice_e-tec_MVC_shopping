@@ -21,5 +21,6 @@ namespace prjMyPrj.Models
         public string fName { get; set; }
         public Nullable<int> fPrice { get; set; }
         public Nullable<int> fQty { get; set; }
+        public string fIsApproved { get; set; }
     }
 }

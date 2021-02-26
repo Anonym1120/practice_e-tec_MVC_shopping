@@ -1,0 +1,40 @@
+﻿@using prjMyPrj.Models
+@model IEnumerable<prjMyPrj.ViewModels.COrderDetail>
+
+@{
+    ViewBag.Title = "ShoppingCart";
+}
+
+<h2>ShoppingCart</h2>
+
+<p>
+    <table class="table">
+        <tr>
+            <td>@Html.DisplayNameFor(model => model.fOrderId)</td>
+            <td>@Html.DisplayNameFor(model => model.fUserId)</td>
+            <td>@Html.DisplayNameFor(model => model.fPId)</td>
+            <td>@Html.DisplayNameFor(model => model.fName)</td>
+            <td>@Html.DisplayNameFor(model => model.fPrice)</td>
+            <td>@Html.DisplayNameFor(model => model.fQty)</td>
+            <td>@Html.DisplayNameFor(model => model.fIsApproved)</td>
+        </tr>
+
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@Html.DisplayFor(modelItem => item.fOrderId)</td>
+                <td>@Html.DisplayFor(modelItem => item.fUserId)</td>
+                <td>@Html.DisplayFor(modelItem => item.fPId)</td>
+                <td>@Html.DisplayFor(modelItem => item.fName)</td>
+                <td>@Html.DisplayFor(modelItem => item.fPrice)</td>
+                <td>@Html.DisplayFor(modelItem => item.fQty)</td>
+                <td>@Html.DisplayFor(modelItem => item.fIsApproved)</td>
+            </tr>
+        }
+
+    </table>
+
+
+
+</p>
+

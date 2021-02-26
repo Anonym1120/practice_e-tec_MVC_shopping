@@ -40,6 +40,7 @@
     <EntitySetMapping Name="tOrderDetail">
       <EntityTypeMapping TypeName="myDBModel.tOrderDetail">
         <MappingFragment StoreEntitySet="tOrderDetail">
+          <ScalarProperty Name="fIsApproved" ColumnName="fIsApproved" />
           <ScalarProperty Name="fQty" ColumnName="fQty" />
           <ScalarProperty Name="fPrice" ColumnName="fPrice" />
           <ScalarProperty Name="fName" ColumnName="fName" />

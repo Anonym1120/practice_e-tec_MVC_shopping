@@ -34,6 +34,7 @@
     <Property Name="fName" Type="nvarchar" MaxLength="50" />
     <Property Name="fPrice" Type="int" />
     <Property Name="fQty" Type="int" />
+    <Property Name="fIsApproved" Type="nvarchar" MaxLength="50" />
   </EntityType>
   <EntityType Name="tProduct">
     <Key>

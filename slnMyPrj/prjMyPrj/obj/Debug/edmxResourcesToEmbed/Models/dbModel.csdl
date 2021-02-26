@@ -50,5 +50,6 @@
     <Property Name="fName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
     <Property Name="fPrice" Type="Int32" />
     <Property Name="fQty" Type="Int32" />
+    <Property Name="fIsApproved" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
   </EntityType>
 </Schema>

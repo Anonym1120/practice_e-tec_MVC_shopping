@@ -39,6 +39,7 @@
           <Property Name="fName" Type="nvarchar" MaxLength="50" />
           <Property Name="fPrice" Type="int" />
           <Property Name="fQty" Type="int" />
+          <Property Name="fIsApproved" Type="nvarchar" MaxLength="50" />
         </EntityType>
         <EntityType Name="tProduct">
           <Key>
@@ -110,6 +111,7 @@
           <Property Name="fName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="fPrice" Type="Int32" />
           <Property Name="fQty" Type="Int32" />
+          <Property Name="fIsApproved" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
         </EntityType>
       </Schema>
     </edmx:ConceptualModels>
@@ -156,6 +158,7 @@
           <EntitySetMapping Name="tOrderDetail">
             <EntityTypeMapping TypeName="myDBModel.tOrderDetail">
               <MappingFragment StoreEntitySet="tOrderDetail">
+                <ScalarProperty Name="fIsApproved" ColumnName="fIsApproved" />
                 <ScalarProperty Name="fQty" ColumnName="fQty" />
                 <ScalarProperty Name="fPrice" ColumnName="fPrice" />
                 <ScalarProperty Name="fName" ColumnName="fName" />
