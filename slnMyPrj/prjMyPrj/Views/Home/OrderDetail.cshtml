@@ -1,41 +1,34 @@
-﻿@using prjMyPrj.Models
-@model IEnumerable<prjMyPrj.ViewModels.CProduct>
+﻿@using prjMyPrj.ViewModels
+@model IEnumerable<prjMyPrj.ViewModels.COrderDetail>
 
 @{
-    ViewBag.Title = "Home Page";
-
+    ViewBag.Title = "OrderDetail";
 }
 
-<h2>商品列表</h2>
+<h2>購買明細</h2>
 
 <p>
     <table class="table">
         <tr>
+            <td>@Html.DisplayNameFor(model => model.fOrderId)</td>
+            <td>@Html.DisplayNameFor(model => model.fUserId)</td>
             <td>@Html.DisplayNameFor(model => model.fPId)</td>
-            <td>@Html.DisplayNameFor(model => model.fImg)</td>
             <td>@Html.DisplayNameFor(model => model.fName)</td>
             <td>@Html.DisplayNameFor(model => model.fPrice)</td>
-            <td>
-                功能
-            </td>
+            <td>@Html.DisplayNameFor(model => model.fQty)</td>
+
         </tr>
 
         @foreach (var item in Model)
         {
             <tr>
+                <td>@Html.DisplayFor(modelItem => item.fOrderId)</td>
+                <td>@Html.DisplayFor(modelItem => item.fUserId)</td>
                 <td>@Html.DisplayFor(modelItem => item.fPId)</td>
-                <td><img src="~/Content/@item.fImg" /></td>
                 <td>@Html.DisplayFor(modelItem => item.fName)</td>
                 <td>@Html.DisplayFor(modelItem => item.fPrice)</td>
-                <td>
-                    @Html.ActionLink("加入購物車", "AddCart", new { fPId = item.fPId })
-                </td>
+                <td>@Html.DisplayFor(modelItem => item.fQty)</td>
             </tr>
-
-            
-
-
         }
-
     </table>
 </p>

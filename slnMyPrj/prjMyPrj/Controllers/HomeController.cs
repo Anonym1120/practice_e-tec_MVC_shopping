@@ -13,34 +13,131 @@ namespace prjMyPrj.Controllers
     {
         dbmyDBEntities db = new dbmyDBEntities();
 
-        //[HttpPost]
-        //public ActionResult ShoppingCart() 
-        //{
-        //    return View();
-        //}
+        public ActionResult AddProduct() 
+        {
+            return View();
+        }
+
+        public ActionResult DeleteCart(int fId) 
+        {
+            var od = db.tOrderDetail
+                .Where(d => d.fId == fId)
+                .FirstOrDefault();
+
+            db.tOrderDetail.Remove(od);
+            db.SaveChanges();
+
+            return RedirectToAction("ShoppingCart");
+        }
+
+        public ActionResult AddCart(string fPId) 
+        {
+            string user = (Session[CDictionary.SK_LOGINED_USER] as tMember).fUserId;
+
+            var cart = db.tOrderDetail
+                .Where(m => m.fPId == fPId && m.fIsApproved == "N" && m.fUserId == user)
+                .FirstOrDefault();
+
+            if (cart == null)
+            {
+                var product = db.tProduct
+                    .Where(p => p.fPId == fPId)
+                    .FirstOrDefault();
+
+                string guid = Guid.NewGuid().ToString();
+
+                tOrderDetail od = new tOrderDetail();
+                od.fUserId = user;
+                od.fOrderId = guid;
+                od.fPId = product.fPId;
+                od.fName = product.fName;
+                od.fPrice = product.fPrice;
+                od.fQty = 1;
+                od.fIsApproved = "N";
+
+                db.tOrderDetail.Add(od);
+            }
+            else 
+            {
+                cart.fQty += 1;
+            }
+
+            db.SaveChanges();
+
+            return RedirectToAction("Index");
+        }
+
+        [HttpPost]
+        public ActionResult ShoppingCart(CShoppingCartViewModel buy) 
+        {
+            string user = (Session[CDictionary.SK_LOGINED_USER] as tMember).fUserId;
+
+            string guid = Guid.NewGuid().ToString();
+
+            tOrder o = new tOrder();
+            o.fUserId = user;
+            o.fOrderId = guid;
+            o.fReceiver = buy.fReceiver;
+            o.fAddress = buy.fAddress;
+            o.fDate = DateTime.Now;
+
+            db.tOrder.Add(o);
+
+            var cart = db.tOrderDetail
+                .Where(od => od.fUserId == user && od.fIsApproved == "N").ToList();
+
+            foreach (var item in cart) 
+            {
+                item.fIsApproved = "Y";
+            }
+
+            db.SaveChanges();
+
+            return RedirectToAction("OrderDetail");
+        }
+
         public ActionResult ShoppingCart()
         {
             string user = (Session[CDictionary.SK_LOGINED_USER] as tMember).fUserId;
+            string level = (Session[CDictionary.SK_LOGINED_USER] as tMember).fLevel;
 
             var table = db.tOrderDetail
                 .Where(m => m.fUserId == user && m.fIsApproved == "N").ToList();
             List<COrderDetail> list = new List<COrderDetail>();
-            foreach (tOrderDetail o in table) 
+            foreach (tOrderDetail od in table) 
             {
-                list.Add(new COrderDetail(o));
+                list.Add(new COrderDetail(od));
             }
             
+            if(level == "1")
             return View("ShoppingCart", "_LayoutMember", list);
+
+            return View("ShoppingCart", "_LayoutAdmin", list);
+        }
+
+        public ActionResult OrderDetail() 
+        {
+            string userId = (Session[CDictionary.SK_LOGINED_USER] as tMember).fUserId;
+            string level = (Session[CDictionary.SK_LOGINED_USER] as tMember).fLevel;
+
+            var orderDetail = db.tOrderDetail
+                .Where(m => m.fUserId == userId && m.fIsApproved == "Y").ToList();
+
+            List<COrderDetail> list = new List<COrderDetail>();
+            foreach (tOrderDetail od in orderDetail) 
+            {
+                list.Add(new COrderDetail(od));
+            }
+
+            if(level == "1")
+            return View("OrderDetail", "_LayoutMember", list);
+
+            return View("OrderDetail", "_LayoutAdmin", list);
         }
         public ActionResult SignOut()
         {
             Session.Clear();
             return RedirectToAction("Index");
-        }
-
-        public ActionResult LogIn()
-        {
-            return View();
         }
 
         [HttpPost]
@@ -62,8 +159,18 @@ namespace prjMyPrj.Controllers
 
             return RedirectToAction("Index");
         }
+
+        public ActionResult LogIn()
+        {
+            return View();
+        }
+        
+        
         public ActionResult Index()
         {
+
+            string level = (Session[CDictionary.SK_LOGINED_USER] as tMember).fLevel;
+
             var table = db.tProduct.ToList();
             List<CProduct> list = new List<CProduct>();
             foreach (tProduct p in table) 
@@ -75,8 +182,14 @@ namespace prjMyPrj.Controllers
             {
                 return View("Index", "_Layout", list);
             }
-
-            return View("Index", "_LayoutMember", list);
+            else
+            {
+                if (level == "1") 
+                {
+                    return View("Index", "_LayoutMember", list);
+                }
+            }
+            return View("Index", "_LayoutAdmin", list);
         }
 
         public ActionResult About()

@@ -19,7 +19,6 @@
     <Property Name="fOrderId" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
     <Property Name="fUserId" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
     <Property Name="fReceiver" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-    <Property Name="fEmail" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
     <Property Name="fAddress" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
     <Property Name="fDate" Type="DateTime" Precision="3" />
   </EntityType>

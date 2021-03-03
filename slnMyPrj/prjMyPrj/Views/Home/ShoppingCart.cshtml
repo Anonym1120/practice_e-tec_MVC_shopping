@@ -5,36 +5,54 @@
     ViewBag.Title = "ShoppingCart";
 }
 
-<h2>ShoppingCart</h2>
+<h2>購物車</h2>
 
-<p>
-    <table class="table">
+
+<table class="table">
+    <tr>
+        <td>@Html.DisplayNameFor(model => model.fOrderId)</td>
+        <td>@Html.DisplayNameFor(model => model.fUserId)</td>
+        <td>@Html.DisplayNameFor(model => model.fPId)</td>
+        <td>@Html.DisplayNameFor(model => model.fName)</td>
+        <td>@Html.DisplayNameFor(model => model.fPrice)</td>
+        <td>@Html.DisplayNameFor(model => model.fQty)</td>
+        <td>@Html.DisplayNameFor(model => model.fIsApproved)</td>
+        <td>
+            功能
+        </td>
+    </tr>
+
+    @foreach (var item in Model)
+    {
         <tr>
-            <td>@Html.DisplayNameFor(model => model.fOrderId)</td>
-            <td>@Html.DisplayNameFor(model => model.fUserId)</td>
-            <td>@Html.DisplayNameFor(model => model.fPId)</td>
-            <td>@Html.DisplayNameFor(model => model.fName)</td>
-            <td>@Html.DisplayNameFor(model => model.fPrice)</td>
-            <td>@Html.DisplayNameFor(model => model.fQty)</td>
-            <td>@Html.DisplayNameFor(model => model.fIsApproved)</td>
+            <td>@Html.DisplayFor(modelItem => item.fOrderId)</td>
+            <td>@Html.DisplayFor(modelItem => item.fUserId)</td>
+            <td>@Html.DisplayFor(modelItem => item.fPId)</td>
+            <td>@Html.DisplayFor(modelItem => item.fName)</td>
+            <td>@Html.DisplayFor(modelItem => item.fPrice)</td>
+            <td>@Html.DisplayFor(modelItem => item.fQty)</td>
+            <td>@Html.DisplayFor(modelItem => item.fIsApproved)</td>
+            <td>
+                @Html.ActionLink("刪除", "deleteCart", "Home", new { fId = item.fId }, new { @calss = "btn btn-default" })
+            </td>
         </tr>
+    }
 
-        @foreach (var item in Model)
-        {
-            <tr>
-                <td>@Html.DisplayFor(modelItem => item.fOrderId)</td>
-                <td>@Html.DisplayFor(modelItem => item.fUserId)</td>
-                <td>@Html.DisplayFor(modelItem => item.fPId)</td>
-                <td>@Html.DisplayFor(modelItem => item.fName)</td>
-                <td>@Html.DisplayFor(modelItem => item.fPrice)</td>
-                <td>@Html.DisplayFor(modelItem => item.fQty)</td>
-                <td>@Html.DisplayFor(modelItem => item.fIsApproved)</td>
-            </tr>
-        }
+</table>
 
-    </table>
+@using (Html.BeginForm("ShoppingCart", "Home", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    <div>
+        <div>
+            <p>收件人姓名 : @Html.TextBox("fReceiver")</p>
+            <p>收件人地址 : @Html.TextBox("fAddress")</p>
+        </div>
+        
+        <div class="col-md-offset-2">
+            <p><input type="submit" value="送出訂單" align="right" /></p>
+        </div>
+    </div>
 
+}
 
-
-</p>
 

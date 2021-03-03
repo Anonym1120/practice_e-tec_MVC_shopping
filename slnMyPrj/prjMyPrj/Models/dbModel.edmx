@@ -24,7 +24,6 @@
           <Property Name="fOrderId" Type="nvarchar" MaxLength="50" />
           <Property Name="fUserId" Type="nvarchar" MaxLength="50" />
           <Property Name="fReceiver" Type="nvarchar" MaxLength="50" />
-          <Property Name="fEmail" Type="nvarchar" MaxLength="50" />
           <Property Name="fAddress" Type="nvarchar" MaxLength="50" />
           <Property Name="fDate" Type="datetime" />
         </EntityType>
@@ -80,7 +79,6 @@
           <Property Name="fOrderId" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="fUserId" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="fReceiver" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="fEmail" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="fAddress" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="fDate" Type="DateTime" Precision="3" />
         </EntityType>
@@ -138,7 +136,6 @@
                 <ScalarProperty Name="fOrderId" ColumnName="fOrderId" />
                 <ScalarProperty Name="fUserId" ColumnName="fUserId" />
                 <ScalarProperty Name="fReceiver" ColumnName="fReceiver" />
-                <ScalarProperty Name="fEmail" ColumnName="fEmail" />
                 <ScalarProperty Name="fAddress" ColumnName="fAddress" />
                 <ScalarProperty Name="fDate" ColumnName="fDate" />
               </MappingFragment>

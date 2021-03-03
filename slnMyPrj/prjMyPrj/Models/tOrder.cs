@@ -18,7 +18,6 @@ namespace prjMyPrj.Models
         public string fOrderId { get; set; }
         public string fUserId { get; set; }
         public string fReceiver { get; set; }
-        public string fEmail { get; set; }
         public string fAddress { get; set; }
         public Nullable<System.DateTime> fDate { get; set; }
     }

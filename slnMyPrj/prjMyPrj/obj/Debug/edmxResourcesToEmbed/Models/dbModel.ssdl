@@ -19,7 +19,6 @@
     <Property Name="fOrderId" Type="nvarchar" MaxLength="50" />
     <Property Name="fUserId" Type="nvarchar" MaxLength="50" />
     <Property Name="fReceiver" Type="nvarchar" MaxLength="50" />
-    <Property Name="fEmail" Type="nvarchar" MaxLength="50" />
     <Property Name="fAddress" Type="nvarchar" MaxLength="50" />
     <Property Name="fDate" Type="datetime" />
   </EntityType>
