@@ -1,0 +1,21 @@
+﻿
+@{
+    ViewBag.Title = "AddProduct";
+}
+
+<h2>新增商品</h2>
+
+@using (Html.BeginForm("AddProduct", "Home", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    <div>
+        <div>
+            <p>產品編號 : @Html.TextBox("fPId")</p>
+            <p>產品名稱 : @Html.TextBox("fName")</p>
+            <p>產品價格 : @Html.TextBox("fPrice")</p>
+            <p>圖片上傳 : <input type="file" id="fImgFile" name="fImgFile" /></p>
+        </div>
+        <div>
+            <p><input type="submit" value="送出" align="right" /></p>
+        </div>
+    </div>
+}

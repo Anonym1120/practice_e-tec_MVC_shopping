@@ -13,9 +13,76 @@ namespace prjMyPrj.Controllers
     {
         dbmyDBEntities db = new dbmyDBEntities();
 
+        public ActionResult DeleteProduct(int fId)
+        {
+            var prod = db.tProduct
+                .Where(p => p.fId == fId)
+                .FirstOrDefault();
+
+            if (prod != null) 
+            {
+                db.tProduct.Remove(prod);
+                db.SaveChanges();
+            }
+
+            return RedirectToAction("Index");
+        }
+
+        [HttpPost]
+        public ActionResult EditProduct(tProduct modify)
+        {
+            var prod = db.tProduct
+                .Where(p => p.fId == modify.fId)
+                .FirstOrDefault();
+
+            if (prod != null) 
+            {
+                prod.fPId = modify.fPId;
+                prod.fName = modify.fName;
+                prod.fPrice = modify.fPrice;
+
+                db.SaveChanges();
+            }
+
+            return RedirectToAction("Index");
+        }
+
+        public ActionResult EditProduct(int fId) 
+        {
+            var prod = db.tProduct
+                .Where(p => p.fId == fId)
+                .FirstOrDefault();
+
+            if (prod == null) 
+            {
+                return RedirectToAction("Index");
+            }
+            return View("EditProduct", "_LayoutAdmin", prod);
+        }
+
+        [HttpPost]
+        public ActionResult AddProduct(tProduct p, HttpPostedFileBase fImgFile)
+        {
+            int point = fImgFile.FileName.IndexOf(".");
+            string extention = fImgFile.FileName.Substring(point, fImgFile.FileName.Length - point);
+            string photoName = p.fPId + extention;
+            fImgFile.SaveAs(Server.MapPath("../Content/" + photoName));
+            p.fImg = "../Content/" + photoName;
+
+            if (string.IsNullOrEmpty(p.fName)) 
+            {
+                return RedirectToAction("Index");
+            }
+
+            db.tProduct.Add(p);
+            db.SaveChanges();
+
+            return RedirectToAction("Index");
+        }
+
         public ActionResult AddProduct() 
         {
-            return View();
+            return View("AddProduct", "_LayoutAdmin");
         }
 
         public ActionResult DeleteCart(int fId) 
