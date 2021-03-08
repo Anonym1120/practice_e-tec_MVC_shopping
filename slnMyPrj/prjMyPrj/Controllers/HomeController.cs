@@ -13,13 +13,52 @@ namespace prjMyPrj.Controllers
     {
         dbmyDBEntities db = new dbmyDBEntities();
 
+        public ActionResult AddUser() 
+        {
+
+
+            return View();
+        }
+        public ActionResult UserList() 
+        {
+            var user = db.tMember.ToList();
+
+            List<CMember> list = new List<CMember>();
+            foreach (tMember m in user) 
+            {
+                list.Add(new CMember(m));
+            }
+
+            return View("UserList", "_LayoutAdmin", list);
+        }
+
+        public ActionResult SelectProduct(string selectItem)
+        {
+            var productItem = from p in db.tProduct
+                              select p;
+
+            if (!string.IsNullOrEmpty(selectItem))
+            {
+                productItem = productItem
+                    .Where(s => s.fName.Contains(selectItem));
+            }
+
+            List<CProduct> list = new List<CProduct>();
+            foreach (tProduct p in productItem) 
+            {
+                list.Add(new CProduct(p));
+            }
+
+            return View(list);
+        }
+
         public ActionResult DeleteProduct(int fId)
         {
             var prod = db.tProduct
                 .Where(p => p.fId == fId)
                 .FirstOrDefault();
 
-            if (prod != null) 
+            if (prod != null)
             {
                 db.tProduct.Remove(prod);
                 db.SaveChanges();
@@ -35,7 +74,7 @@ namespace prjMyPrj.Controllers
                 .Where(p => p.fId == modify.fId)
                 .FirstOrDefault();
 
-            if (prod != null) 
+            if (prod != null)
             {
                 prod.fPId = modify.fPId;
                 prod.fName = modify.fName;
@@ -47,13 +86,13 @@ namespace prjMyPrj.Controllers
             return RedirectToAction("Index");
         }
 
-        public ActionResult EditProduct(int fId) 
+        public ActionResult EditProduct(int fId)
         {
             var prod = db.tProduct
                 .Where(p => p.fId == fId)
                 .FirstOrDefault();
 
-            if (prod == null) 
+            if (prod == null)
             {
                 return RedirectToAction("Index");
             }
@@ -69,7 +108,7 @@ namespace prjMyPrj.Controllers
             fImgFile.SaveAs(Server.MapPath("../Content/" + photoName));
             p.fImg = "../Content/" + photoName;
 
-            if (string.IsNullOrEmpty(p.fName)) 
+            if (string.IsNullOrEmpty(p.fName))
             {
                 return RedirectToAction("Index");
             }
@@ -80,12 +119,12 @@ namespace prjMyPrj.Controllers
             return RedirectToAction("Index");
         }
 
-        public ActionResult AddProduct() 
+        public ActionResult AddProduct()
         {
             return View("AddProduct", "_LayoutAdmin");
         }
 
-        public ActionResult DeleteCart(int fId) 
+        public ActionResult DeleteCart(int fId)
         {
             var od = db.tOrderDetail
                 .Where(d => d.fId == fId)
@@ -97,7 +136,7 @@ namespace prjMyPrj.Controllers
             return RedirectToAction("ShoppingCart");
         }
 
-        public ActionResult AddCart(string fPId) 
+        public ActionResult AddCart(string fPId)
         {
             string user = (Session[CDictionary.SK_LOGINED_USER] as tMember).fUserId;
 
@@ -124,7 +163,7 @@ namespace prjMyPrj.Controllers
 
                 db.tOrderDetail.Add(od);
             }
-            else 
+            else
             {
                 cart.fQty += 1;
             }
@@ -135,7 +174,7 @@ namespace prjMyPrj.Controllers
         }
 
         [HttpPost]
-        public ActionResult ShoppingCart(CShoppingCartViewModel buy) 
+        public ActionResult ShoppingCart(CShoppingCartViewModel buy)
         {
             string user = (Session[CDictionary.SK_LOGINED_USER] as tMember).fUserId;
 
@@ -153,7 +192,7 @@ namespace prjMyPrj.Controllers
             var cart = db.tOrderDetail
                 .Where(od => od.fUserId == user && od.fIsApproved == "N").ToList();
 
-            foreach (var item in cart) 
+            foreach (var item in cart)
             {
                 item.fIsApproved = "Y";
             }
@@ -171,18 +210,18 @@ namespace prjMyPrj.Controllers
             var table = db.tOrderDetail
                 .Where(m => m.fUserId == user && m.fIsApproved == "N").ToList();
             List<COrderDetail> list = new List<COrderDetail>();
-            foreach (tOrderDetail od in table) 
+            foreach (tOrderDetail od in table)
             {
                 list.Add(new COrderDetail(od));
             }
-            
-            if(level == "1")
-            return View("ShoppingCart", "_LayoutMember", list);
+
+            if (level == "1")
+                return View("ShoppingCart", "_LayoutMember", list);
 
             return View("ShoppingCart", "_LayoutAdmin", list);
         }
 
-        public ActionResult OrderDetail() 
+        public ActionResult OrderDetail()
         {
             string userId = (Session[CDictionary.SK_LOGINED_USER] as tMember).fUserId;
             string level = (Session[CDictionary.SK_LOGINED_USER] as tMember).fLevel;
@@ -191,13 +230,13 @@ namespace prjMyPrj.Controllers
                 .Where(m => m.fUserId == userId && m.fIsApproved == "Y").ToList();
 
             List<COrderDetail> list = new List<COrderDetail>();
-            foreach (tOrderDetail od in orderDetail) 
+            foreach (tOrderDetail od in orderDetail)
             {
                 list.Add(new COrderDetail(od));
             }
 
-            if(level == "1")
-            return View("OrderDetail", "_LayoutMember", list);
+            if (level == "1")
+                return View("OrderDetail", "_LayoutMember", list);
 
             return View("OrderDetail", "_LayoutAdmin", list);
         }
@@ -231,8 +270,8 @@ namespace prjMyPrj.Controllers
         {
             return View();
         }
-        
-        
+
+
         public ActionResult Index()
         {
 
@@ -240,7 +279,7 @@ namespace prjMyPrj.Controllers
 
             var table = db.tProduct.ToList();
             List<CProduct> list = new List<CProduct>();
-            foreach (tProduct p in table) 
+            foreach (tProduct p in table)
             {
                 list.Add(new CProduct(p));
             }
@@ -251,7 +290,7 @@ namespace prjMyPrj.Controllers
             }
             else
             {
-                if (level == "1") 
+                if (level == "1")
                 {
                     return View("Index", "_LayoutMember", list);
                 }

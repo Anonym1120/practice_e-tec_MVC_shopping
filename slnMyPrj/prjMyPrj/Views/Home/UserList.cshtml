@@ -1,0 +1,37 @@
+﻿@using prjMyPrj.Models
+@model IEnumerable<prjMyPrj.ViewModels.CMember>
+
+
+@{
+    ViewBag.Title = "UserList";
+}
+
+<h2>使用者名單</h2>
+<p>
+    @Html.ActionLink("新增", "AddUser")
+</p>
+
+
+<p>
+    <table class="table">
+        <tr>
+            <td>@Html.DisplayNameFor(model => model.fUserId)</td>
+            <td>@Html.DisplayNameFor(model => model.fPassword)</td>
+            <td>@Html.DisplayNameFor(model => model.fName)</td>
+            <td>@Html.DisplayNameFor(model => model.fEmail)</td>
+            <td>@Html.DisplayNameFor(model => model.fLevel)</td>
+        </tr>
+
+        @foreach (var user in Model)
+        {
+            <tr>
+                <td>@Html.DisplayFor(model => user.fUserId)</td>
+                <td>@Html.DisplayFor(model => user.fPassword)</td>
+                <td>@Html.DisplayFor(model => user.fName)</td>
+                <td>@Html.DisplayFor(model => user.fEmail)</td>
+                <td>@Html.DisplayFor(model => user.fLevel)</td>
+            </tr>
+        }
+    </table>
+</p>
+

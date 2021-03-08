@@ -17,10 +17,20 @@ namespace prjMyPrj.ViewModels
             _member = m;
         }
         public int fId { get; set; }
+
+        [DisplayName("帳號")]
         public string fUserId { get; set; }
+
+        [DisplayName("密碼")]
         public string fPassword { get; set; }
+
+        [DisplayName("姓名")]
         public string fName { get; set; }
+
+        [DisplayName("信箱")]
         public string fEmail { get; set; }
+
+        [DisplayName("權限")]
         public string fLevel { get; set; }
     }
     

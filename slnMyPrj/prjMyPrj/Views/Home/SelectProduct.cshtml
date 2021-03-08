@@ -2,18 +2,10 @@
 @model IEnumerable<prjMyPrj.ViewModels.CProduct>
 
 @{
-    ViewBag.Title = "Home Page";
-
+    ViewBag.Title = "SelectProduct";
 }
 
-<h2>商品列表</h2>
-<p>
-    @using (Html.BeginForm("SelectProduct", "Home", FormMethod.Get, new { enctype = "multipart/form-data" }))
-    {
-        @Html.TextBox("selectItem")
-        <input type="submit" value="查詢" />
-    }
-</p>
+<h2>查詢結果</h2>
 
 <p>
     <table class="table">
@@ -51,6 +43,6 @@
             </tr>
 
         }
-
     </table>
 </p>
+
