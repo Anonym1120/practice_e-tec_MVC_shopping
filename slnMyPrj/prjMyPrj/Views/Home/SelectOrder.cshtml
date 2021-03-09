@@ -1,0 +1,17 @@
+﻿@using prjMyPrj.Models
+@model IEnumerable<prjMyPrj.ViewModels.COrder>
+
+@{
+    ViewBag.Title = "SelectOrder";
+}
+
+<h2>查詢訂單</h2>
+@using (Html.BeginForm("SelectOut", "Home", FormMethod.Get, new { enctype = "multipart/form-data" }))
+{
+    <div>
+        會員帳號 : @Html.TextBox("fUserId")
+        <input type="submit" value="查詢" />
+    </div>
+}
+
+

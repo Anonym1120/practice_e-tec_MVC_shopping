@@ -8,7 +8,7 @@
 
 <h2>商品列表</h2>
 <p>
-    @using (Html.BeginForm("SelectProduct", "Home", FormMethod.Get, new { enctype = "multipart/form-data" }))
+    @using (Html.BeginForm("SelectOut", "Home", FormMethod.Get, new { enctype = "multipart/form-data" }))
     {
         @Html.TextBox("selectItem")
         <input type="submit" value="查詢" />

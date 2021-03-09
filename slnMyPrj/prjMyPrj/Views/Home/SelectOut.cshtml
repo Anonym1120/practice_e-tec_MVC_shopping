@@ -1,0 +1,31 @@
+﻿@using prjMyPrj.Models
+@model IEnumerable<prjMyPrj.ViewModels.COrder>
+
+@{
+    ViewBag.Title = "SelectOut";
+}
+
+<h2>查詢結果</h2>
+
+<p>
+    <table class="table">
+        <tr>
+            <td>@Html.DisplayNameFor(model => model.fOrderId)</td>
+            <td>@Html.DisplayNameFor(model => model.fUserId)</td>
+            <td>@Html.DisplayNameFor(model => model.fReceiver)</td>
+            <td>@Html.DisplayNameFor(model => model.fAddress)</td>
+            <td>@Html.DisplayNameFor(model => model.fDate)</td>
+        </tr>
+
+        @foreach (var order in Model)
+            {
+                <tr>
+                    <td>@Html.DisplayFor(model => order.fOrderId)</td>
+                    <td>@Html.DisplayFor(model => order.fUserId)</td>
+                    <td>@Html.DisplayFor(model => order.fReceiver)</td>
+                    <td>@Html.DisplayFor(model => order.fAddress)</td>
+                    <td>@Html.DisplayFor(model => order.fDate)</td>
+                </tr>
+            }
+    </table>
+</p>

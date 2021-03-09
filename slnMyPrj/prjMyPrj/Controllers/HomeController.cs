@@ -13,18 +13,57 @@ namespace prjMyPrj.Controllers
     {
         dbmyDBEntities db = new dbmyDBEntities();
 
-        public ActionResult AddUser() 
+        public ActionResult SelectOut(string fUserId)
+        {
+            var order = from o in db.tOrder
+                        select o;
+
+            if (!string.IsNullOrEmpty(fUserId))
+            {
+                order = order
+                    .Where(o => o.fUserId.Contains(fUserId));
+
+            }
+
+            List<COrder> list = new List<COrder>();
+            foreach (var o in order)
+            {
+                list.Add(new COrder(o));
+            }
+
+            return View(list);
+        }
+
+        public ActionResult SelectOrder()
+        {
+            return View("SelectOrder", "_LayoutAdmin");
+        }
+
+        [HttpPost]
+        public ActionResult AddUser(tMember m)
+        {
+            if (string.IsNullOrEmpty(m.fUserId))
+            {
+                return RedirectToAction("Index");
+            }
+
+            db.tMember.Add(m);
+            db.SaveChanges();
+
+            return RedirectToAction("UserList");
+        }
+
+        public ActionResult AddUser()
         {
 
-
-            return View();
+            return View("AddUser", "_LayoutAdmin");
         }
-        public ActionResult UserList() 
+        public ActionResult UserList()
         {
             var user = db.tMember.ToList();
 
             List<CMember> list = new List<CMember>();
-            foreach (tMember m in user) 
+            foreach (tMember m in user)
             {
                 list.Add(new CMember(m));
             }
@@ -44,7 +83,7 @@ namespace prjMyPrj.Controllers
             }
 
             List<CProduct> list = new List<CProduct>();
-            foreach (tProduct p in productItem) 
+            foreach (tProduct p in productItem)
             {
                 list.Add(new CProduct(p));
             }
@@ -298,18 +337,5 @@ namespace prjMyPrj.Controllers
             return View("Index", "_LayoutAdmin", list);
         }
 
-        public ActionResult About()
-        {
-            ViewBag.Message = "Your application description page.";
-
-            return View();
-        }
-
-        public ActionResult Contact()
-        {
-            ViewBag.Message = "Your contact page.";
-
-            return View();
-        }
     }
 }

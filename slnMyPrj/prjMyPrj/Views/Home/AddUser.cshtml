@@ -1,13 +1,23 @@
-﻿@using prjMyPrj.Models
-@model IEnumerable<prjMyPrj.ViewModels.CMember>
-
+﻿
 @{
     ViewBag.Title = "AddUser";
 }
 
-<h2>AddUser</h2>
-<p>
-    <table class="table">
+<h2>新增使用者</h2>
+@using (Html.BeginForm("AddUser", "Home", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    <div>
+        <div>
+            <p>帳號 : @Html.TextBox("fUserId")</p>
+            <p>密碼 : @Html.TextBox("fPassword")</p>
+            <p>姓名 : @Html.TextBox("fName")</p>
+            <p>信箱 : @Html.TextBox("fEmail")</p>
+            <p>權限 : @Html.TextBox("fLevel")</p>
+        </div>
+        <div class="col-md-offset-2">
+            <input type="submit" value="送出"/>
+        </div>
+    </div>
 
-    </table>
-</p>
+}
+
