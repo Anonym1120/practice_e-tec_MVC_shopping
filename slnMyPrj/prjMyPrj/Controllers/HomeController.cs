@@ -15,6 +15,11 @@ namespace prjMyPrj.Controllers
 
         public ActionResult SelectOut(string fUserId)
         {
+            if (Session[CDictionary.SK_LOGINED_USER] == null)
+            {
+                return RedirectToAction("Login");
+            }
+
             var order = from o in db.tOrder
                         select o;
 
@@ -36,6 +41,11 @@ namespace prjMyPrj.Controllers
 
         public ActionResult SelectOrder()
         {
+            if (Session[CDictionary.SK_LOGINED_USER] == null)
+            {
+                return RedirectToAction("Login");
+            }
+
             return View("SelectOrder", "_LayoutAdmin");
         }
 
@@ -55,11 +65,20 @@ namespace prjMyPrj.Controllers
 
         public ActionResult AddUser()
         {
+            if (Session[CDictionary.SK_LOGINED_USER] == null) 
+            {
+                return RedirectToAction("LogIn");
+            }
 
             return View("AddUser", "_LayoutAdmin");
         }
         public ActionResult UserList()
         {
+            if (Session[CDictionary.SK_LOGINED_USER] == null)
+            {
+                return RedirectToAction("LogIn");
+            }
+
             var user = db.tMember.ToList();
 
             List<CMember> list = new List<CMember>();
@@ -93,6 +112,11 @@ namespace prjMyPrj.Controllers
 
         public ActionResult DeleteProduct(int fId)
         {
+            if (Session[CDictionary.SK_LOGINED_USER] == null)
+            {
+                return RedirectToAction("LogIn");
+            }
+
             var prod = db.tProduct
                 .Where(p => p.fId == fId)
                 .FirstOrDefault();
@@ -109,6 +133,11 @@ namespace prjMyPrj.Controllers
         [HttpPost]
         public ActionResult EditProduct(tProduct modify)
         {
+            if (Session[CDictionary.SK_LOGINED_USER] == null)
+            {
+                return RedirectToAction("LogIn");
+            }
+
             var prod = db.tProduct
                 .Where(p => p.fId == modify.fId)
                 .FirstOrDefault();
@@ -127,6 +156,11 @@ namespace prjMyPrj.Controllers
 
         public ActionResult EditProduct(int fId)
         {
+            if (Session[CDictionary.SK_LOGINED_USER] == null)
+            {
+                return RedirectToAction("LogIn");
+            }
+
             var prod = db.tProduct
                 .Where(p => p.fId == fId)
                 .FirstOrDefault();
@@ -160,11 +194,21 @@ namespace prjMyPrj.Controllers
 
         public ActionResult AddProduct()
         {
+            if (Session[CDictionary.SK_LOGINED_USER] == null)
+            {
+                return RedirectToAction("LogIn");
+            }
+
             return View("AddProduct", "_LayoutAdmin");
         }
 
         public ActionResult DeleteCart(int fId)
         {
+            if (Session[CDictionary.SK_LOGINED_USER] == null)
+            {
+                return RedirectToAction("LogIn");
+            }
+
             var od = db.tOrderDetail
                 .Where(d => d.fId == fId)
                 .FirstOrDefault();
@@ -177,6 +221,11 @@ namespace prjMyPrj.Controllers
 
         public ActionResult AddCart(string fPId)
         {
+            if (Session[CDictionary.SK_LOGINED_USER] == null)
+            {
+                return RedirectToAction("LogIn");
+            }
+            
             string user = (Session[CDictionary.SK_LOGINED_USER] as tMember).fUserId;
 
             var cart = db.tOrderDetail
@@ -279,7 +328,7 @@ namespace prjMyPrj.Controllers
 
             return View("OrderDetail", "_LayoutAdmin", list);
         }
-        public ActionResult SignOut()
+        public ActionResult LogOut()
         {
             Session.Clear();
             return RedirectToAction("Index");
@@ -313,9 +362,6 @@ namespace prjMyPrj.Controllers
 
         public ActionResult Index()
         {
-
-            string level = (Session[CDictionary.SK_LOGINED_USER] as tMember).fLevel;
-
             var table = db.tProduct.ToList();
             List<CProduct> list = new List<CProduct>();
             foreach (tProduct p in table)
@@ -329,11 +375,13 @@ namespace prjMyPrj.Controllers
             }
             else
             {
+                string level = (Session[CDictionary.SK_LOGINED_USER] as tMember).fLevel;
                 if (level == "1")
                 {
                     return View("Index", "_LayoutMember", list);
                 }
             }
+
             return View("Index", "_LayoutAdmin", list);
         }
 

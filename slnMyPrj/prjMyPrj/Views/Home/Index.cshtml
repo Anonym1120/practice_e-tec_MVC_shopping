@@ -8,7 +8,7 @@
 
 <h2>商品列表</h2>
 <p>
-    @using (Html.BeginForm("SelectOut", "Home", FormMethod.Get, new { enctype = "multipart/form-data" }))
+    @using (Html.BeginForm("SelectProduct", "Home", FormMethod.Get, new { enctype = "multipart/form-data" }))
     {
         @Html.TextBox("selectItem")
         <input type="submit" value="查詢" />
@@ -25,9 +25,17 @@
             <td>
                 購物車
             </td>
-            <td>
-                操作
-            </td>
+            @if (Session[CDictionary.SK_LOGINED_USER] == null)
+            {
+            }
+            else
+            {
+                if ((Session[CDictionary.SK_LOGINED_USER] as tMember).fLevel == "2")
+                {
+                    <td>操作</td>
+                    <td>操作</td>
+                }
+            }
         </tr>
 
         @foreach (var item in Model)
@@ -41,13 +49,19 @@
                     @Html.ActionLink("加入購物車", "AddCart", new { fPId = item.fPId })
                 </td>
 
-                <td>
-                    @if ((Session[CDictionary.SK_LOGINED_USER] as tMember).fLevel == "2")
+
+                @if (Session[CDictionary.SK_LOGINED_USER] == null)
+                {
+                }
+                else
+                {
+                    if ((Session[CDictionary.SK_LOGINED_USER] as tMember).fLevel == "2")
                     {
-                        @Html.ActionLink("編輯", "EditProduct", new { fId = item.fId })
-                        @Html.ActionLink("刪除", "DeleteProduct", new { fId = item.fId })
+                        <td>@Html.ActionLink("編輯", "EditProduct", new { fId = item.fId })</td>
+                        <td>@Html.ActionLink("刪除", "DeleteProduct", new { fId = item.fId })</td>
                     }
-                </td>
+                }
+
             </tr>
 
         }
