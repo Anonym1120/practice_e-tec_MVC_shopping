@@ -6,6 +6,7 @@ using System.Web.Mvc;
 
 using prjMyPrj.Models;
 using prjMyPrj.ViewModels;
+using prjMyPrj.ActionFilter;
 
 namespace prjMyPrj.Controllers
 {
@@ -13,12 +14,13 @@ namespace prjMyPrj.Controllers
     {
         dbmyDBEntities db = new dbmyDBEntities();
 
+        [CLoginActionFilter(check = true)]
         public ActionResult SelectOut(string fUserId)
         {
-            if (Session[CDictionary.SK_LOGINED_USER] == null)
-            {
-                return RedirectToAction("Login");
-            }
+            //if (Session[CDictionary.SK_LOGINED_USER] == null)
+            //{
+            //    return RedirectToAction("Login");
+            //}
 
             var order = from o in db.tOrder
                         select o;
@@ -39,12 +41,13 @@ namespace prjMyPrj.Controllers
             return View(list);
         }
 
+        [CLoginActionFilter(check = true)]
         public ActionResult SelectOrder()
         {
-            if (Session[CDictionary.SK_LOGINED_USER] == null)
-            {
-                return RedirectToAction("Login");
-            }
+            //if (Session[CDictionary.SK_LOGINED_USER] == null)
+            //{
+            //    return RedirectToAction("Login");
+            //}
 
             return View("SelectOrder", "_LayoutAdmin");
         }
@@ -63,21 +66,24 @@ namespace prjMyPrj.Controllers
             return RedirectToAction("UserList");
         }
 
+        [CLoginActionFilter(check = true)]
         public ActionResult AddUser()
         {
-            if (Session[CDictionary.SK_LOGINED_USER] == null) 
-            {
-                return RedirectToAction("LogIn");
-            }
+            //if (Session[CDictionary.SK_LOGINED_USER] == null) 
+            //{
+            //    return RedirectToAction("LogIn");
+            //}
 
             return View("AddUser", "_LayoutAdmin");
         }
+
+        [CLoginActionFilter(check = true)]
         public ActionResult UserList()
         {
-            if (Session[CDictionary.SK_LOGINED_USER] == null)
-            {
-                return RedirectToAction("LogIn");
-            }
+            //if (Session[CDictionary.SK_LOGINED_USER] == null)
+            //{
+            //    return RedirectToAction("LogIn");
+            //}
 
             var user = db.tMember.ToList();
 
@@ -110,12 +116,13 @@ namespace prjMyPrj.Controllers
             return View(list);
         }
 
+        [CLoginActionFilter(check = true)]
         public ActionResult DeleteProduct(int fId)
         {
-            if (Session[CDictionary.SK_LOGINED_USER] == null)
-            {
-                return RedirectToAction("LogIn");
-            }
+            //if (Session[CDictionary.SK_LOGINED_USER] == null)
+            //{
+            //    return RedirectToAction("LogIn");
+            //}
 
             var prod = db.tProduct
                 .Where(p => p.fId == fId)
@@ -130,13 +137,14 @@ namespace prjMyPrj.Controllers
             return RedirectToAction("Index");
         }
 
+        [CLoginActionFilter(check = true)]
         [HttpPost]
         public ActionResult EditProduct(tProduct modify)
         {
-            if (Session[CDictionary.SK_LOGINED_USER] == null)
-            {
-                return RedirectToAction("LogIn");
-            }
+            //if (Session[CDictionary.SK_LOGINED_USER] == null)
+            //{
+            //    return RedirectToAction("LogIn");
+            //}
 
             var prod = db.tProduct
                 .Where(p => p.fId == modify.fId)
@@ -154,16 +162,23 @@ namespace prjMyPrj.Controllers
             return RedirectToAction("Index");
         }
 
+        [CLoginActionFilter(check = true)]
         public ActionResult EditProduct(int fId)
         {
-            if (Session[CDictionary.SK_LOGINED_USER] == null)
-            {
-                return RedirectToAction("LogIn");
-            }
+            //if (Session[CDictionary.SK_LOGINED_USER] == null)
+            //{
+            //    return RedirectToAction("LogIn");
+            //}
 
             var prod = db.tProduct
-                .Where(p => p.fId == fId)
+                .Where(p => p.fId == fId).ToList()
                 .FirstOrDefault();
+
+            //List<CProduct> list = new List<CProduct>();
+            //foreach (tProduct p in prod) 
+            //{
+            //    list.Add(new CProduct(p));
+            //}
 
             if (prod == null)
             {
@@ -192,22 +207,24 @@ namespace prjMyPrj.Controllers
             return RedirectToAction("Index");
         }
 
+        [CLoginActionFilter(check = true)]
         public ActionResult AddProduct()
         {
-            if (Session[CDictionary.SK_LOGINED_USER] == null)
-            {
-                return RedirectToAction("LogIn");
-            }
+            //if (Session[CDictionary.SK_LOGINED_USER] == null)
+            //{
+            //    return RedirectToAction("LogIn");
+            //}
 
             return View("AddProduct", "_LayoutAdmin");
         }
 
+        [CLoginActionFilter(check = true)]
         public ActionResult DeleteCart(int fId)
         {
-            if (Session[CDictionary.SK_LOGINED_USER] == null)
-            {
-                return RedirectToAction("LogIn");
-            }
+            //if (Session[CDictionary.SK_LOGINED_USER] == null)
+            //{
+            //    return RedirectToAction("LogIn");
+            //}
 
             var od = db.tOrderDetail
                 .Where(d => d.fId == fId)
@@ -219,12 +236,14 @@ namespace prjMyPrj.Controllers
             return RedirectToAction("ShoppingCart");
         }
 
+
+        [CLoginActionFilter(check = true)]
         public ActionResult AddCart(string fPId)
         {
-            if (Session[CDictionary.SK_LOGINED_USER] == null)
-            {
-                return RedirectToAction("LogIn");
-            }
+            //if (Session[CDictionary.SK_LOGINED_USER] == null)
+            //{
+            //    return RedirectToAction("LogIn");
+            //}
             
             string user = (Session[CDictionary.SK_LOGINED_USER] as tMember).fUserId;
 
@@ -309,6 +328,7 @@ namespace prjMyPrj.Controllers
             return View("ShoppingCart", "_LayoutAdmin", list);
         }
 
+        [CLoginActionFilter(check = true)]
         public ActionResult OrderDetail()
         {
             string userId = (Session[CDictionary.SK_LOGINED_USER] as tMember).fUserId;
