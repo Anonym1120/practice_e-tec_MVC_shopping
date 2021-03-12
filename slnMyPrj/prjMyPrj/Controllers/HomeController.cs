@@ -38,7 +38,7 @@ namespace prjMyPrj.Controllers
                 list.Add(new COrder(o));
             }
 
-            return View(list);
+            return View("SelectOut", "_LayoutAdmin", list);
         }
 
         [CLoginActionFilter(check = true)]
@@ -157,6 +157,7 @@ namespace prjMyPrj.Controllers
                 prod.fPrice = modify.fPrice;
 
                 db.SaveChanges();
+                
             }
 
             return RedirectToAction("Index");
@@ -170,20 +171,24 @@ namespace prjMyPrj.Controllers
             //    return RedirectToAction("LogIn");
             //}
 
+            //var prod = db.tProduct
+            //    .Where(p => p.fId == fId).ToList();
+
             var prod = db.tProduct
                 .Where(p => p.fId == fId).ToList()
                 .FirstOrDefault();
-
-            //List<CProduct> list = new List<CProduct>();
-            //foreach (tProduct p in prod) 
-            //{
-            //    list.Add(new CProduct(p));
-            //}
 
             if (prod == null)
             {
                 return RedirectToAction("Index");
             }
+
+            //List<CProduct> list = new List<CProduct>();
+            //foreach (tProduct p in prod)
+            //{
+            //    list.Add(new CProduct(p));
+            //}
+
             return View("EditProduct", "_LayoutAdmin", prod);
         }
 
@@ -244,7 +249,7 @@ namespace prjMyPrj.Controllers
             //{
             //    return RedirectToAction("LogIn");
             //}
-            
+
             string user = (Session[CDictionary.SK_LOGINED_USER] as tMember).fUserId;
 
             var cart = db.tOrderDetail
@@ -379,6 +384,39 @@ namespace prjMyPrj.Controllers
             return View();
         }
 
+        [HttpPost]
+        public ActionResult AddMember(tMember m)
+        {
+            var userId = db.tMember
+                .Where(u => u.fUserId == m.fUserId)
+                .FirstOrDefault();
+
+            if (string.IsNullOrEmpty(m.fUserId)) 
+            {
+                ViewBag.message = "請重新輸入帳號";
+
+                return View("AddMember", "_Layout");
+            }
+
+            if (userId != null) 
+            {
+                ViewBag.message2 = "已申請過，請重新輸入帳號。";
+
+                return View("AddMember", "_Layout");
+            }
+
+            m.fLevel = "1";
+
+            db.tMember.Add(m);
+            db.SaveChanges();
+
+            return RedirectToAction("LogIn");
+        }
+
+        public ActionResult AddMember() 
+        {
+            return View("AddMember", "_Layout");
+        }
 
         public ActionResult Index()
         {

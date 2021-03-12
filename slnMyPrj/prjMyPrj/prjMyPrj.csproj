@@ -235,6 +235,7 @@
     <Content Include="Views\Home\AddUser.cshtml" />
     <Content Include="Views\Home\SelectOrder.cshtml" />
     <Content Include="Views\Home\SelectOut.cshtml" />
+    <Content Include="Views\Home\AddMember.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

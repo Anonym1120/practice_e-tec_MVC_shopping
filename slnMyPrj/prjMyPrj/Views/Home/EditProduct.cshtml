@@ -1,26 +1,23 @@
 ﻿@using prjMyPrj.Models
-@model prjMyPrj.Models.tProduct 
-
+@model prjMyPrj.Models.tProduct
 @{
     ViewBag.Title = "EditProduct";
 }
 
 <h2>修改產品資料</h2>
 
-@using (Html.BeginForm("EditProduct", "Home"))
+@using (Html.BeginForm("EditProduct", "Home", FormMethod.Post))
 {
     <div>
-        <input type="hidden" name="fId" value="@Model.fId"/>
+        <input type="hidden" name="fId" value="@Model.fId" />
+
         <div>
-            <p>@Html.LabelFor(model => model.fPId)</p>
-            <p>@Html.EditorFor(model => model.fPId)</p>
-            <p>@Html.LabelFor(model => model.fName)</p>
-            <p>@Html.EditorFor(model => model.fName)</p>
-            <p>@Html.LabelFor(model => model.fPrice)</p>
-            <p>@Html.EditorFor(model => model.fPrice)</p>
+            <p>產品編號 : @Html.EditorFor(model => model.fPId)</p>
+            <p>產品名稱 : @Html.EditorFor(model => model.fName)</p>
+            <p>產品價格 : @Html.EditorFor(model => model.fPrice)</p>
         </div>
         <div>
-            <input type="submit" value="送出" align="right"/>
+            <input type="submit" value="送出" align="right" />
         </div>
 
     </div>
