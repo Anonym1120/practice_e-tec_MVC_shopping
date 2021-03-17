@@ -14,9 +14,22 @@
             <p>密碼 : @Html.TextBox("fPassword")</p>
             <p>姓名 : @Html.TextBox("fName")</p>
             <p>信箱 : @Html.TextBox("fEmail")</p>
+            <p>
+                @Html.Label("權限") :
+                @*@Html.DropDownList("level", new SelectList(new[] { "會員", "管理者" }))// 其一方法  *@
+                @{
+                    List<SelectListItem> levelList = new List<SelectListItem>
+                        {
+                        new SelectListItem {Text = "會員", Value = "1" },
+                        new SelectListItem { Text = "管理者", Value = "2" }
+                    };
+                }
+                @Html.DropDownList("fLevel", levelList)
+
+            </p>
             <p></p>
             <div class="col-md-offset-2">
-                <input type="submit" value="送出"/>
+                <input type="submit" value="送出" />
                 @ViewBag.Message
                 @ViewBag.Message2
             </div>

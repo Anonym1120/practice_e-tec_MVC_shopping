@@ -29,7 +29,6 @@ namespace prjMyPrj.Controllers
             {
                 order = order
                     .Where(o => o.fUserId.Contains(fUserId));
-
             }
 
             List<COrder> list = new List<COrder>();
@@ -139,27 +138,47 @@ namespace prjMyPrj.Controllers
 
         [CLoginActionFilter(check = true)]
         [HttpPost]
-        public ActionResult EditProduct(tProduct modify)
+        public ActionResult EditProduct(tProduct modify, HttpPostedFileBase fImgFile)
         {
-            //if (Session[CDictionary.SK_LOGINED_USER] == null)
-            //{
-            //    return RedirectToAction("LogIn");
-            //}
-
             var prod = db.tProduct
                 .Where(p => p.fId == modify.fId)
                 .FirstOrDefault();
 
+            if (fImgFile != null) 
+            {
+                string deleteresult = prod.fImg;
+
+                if (System.IO.File.Exists(Server.MapPath(prod.fImg)))
+                {
+                    try
+                    {
+                        System.IO.File.Delete(Server.MapPath(prod.fImg));
+                    }
+                    catch
+                    {
+                        deleteresult = "修改失敗";
+                    }
+                }
+
+                if (deleteresult != "修改失敗") 
+                {
+                    int point = fImgFile.FileName.IndexOf(".");
+                    string extention = fImgFile.FileName.Substring(point, fImgFile.FileName.Length - point);
+                    string photoName = modify.fPId + extention;
+                    fImgFile.SaveAs(Server.MapPath("../Content/" + photoName));
+                    modify.fImg = "../Content/" + photoName;
+                }
+            }
+            
             if (prod != null)
             {
                 prod.fPId = modify.fPId;
                 prod.fName = modify.fName;
                 prod.fPrice = modify.fPrice;
-
-                db.SaveChanges();
-                
+                prod.fImg = modify.fImg;
+                db.SaveChanges();                
             }
-
+            
             return RedirectToAction("Index");
         }
 
@@ -191,7 +210,7 @@ namespace prjMyPrj.Controllers
 
             return View("EditProduct", "_LayoutAdmin", prod);
         }
-
+        
         [HttpPost]
         public ActionResult AddProduct(tProduct p, HttpPostedFileBase fImgFile)
         {
@@ -314,6 +333,7 @@ namespace prjMyPrj.Controllers
             return RedirectToAction("OrderDetail");
         }
 
+        [CLoginActionFilter(check = true)]
         public ActionResult ShoppingCart()
         {
             string user = (Session[CDictionary.SK_LOGINED_USER] as tMember).fUserId;
@@ -384,6 +404,7 @@ namespace prjMyPrj.Controllers
             return View();
         }
 
+        [CLoginActionFilter(check = true)]
         [HttpPost]
         public ActionResult AddMember(tMember m)
         {
@@ -404,8 +425,6 @@ namespace prjMyPrj.Controllers
 
                 return View("AddMember", "_Layout");
             }
-
-            m.fLevel = "1";
 
             db.tMember.Add(m);
             db.SaveChanges();
