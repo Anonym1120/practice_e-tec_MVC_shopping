@@ -10,6 +10,7 @@
     <Property Name="fName" Type="nvarchar" MaxLength="50" />
     <Property Name="fEmail" Type="nvarchar" MaxLength="50" />
     <Property Name="fLevel" Type="nvarchar" MaxLength="50" />
+    <Property Name="fUsing" Type="nvarchar" MaxLength="50" />
   </EntityType>
   <EntityType Name="tOrder">
     <Key>
@@ -44,6 +45,7 @@
     <Property Name="fName" Type="nvarchar" MaxLength="50" />
     <Property Name="fPrice" Type="int" />
     <Property Name="fImg" Type="nvarchar" MaxLength="50" />
+    <Property Name="fIsApproved" Type="nvarchar" MaxLength="50" />
   </EntityType>
   <EntityContainer Name="myDBModelStoreContainer">
     <EntitySet Name="tMember" EntityType="Self.tMember" Schema="dbo" store:Type="Tables" />

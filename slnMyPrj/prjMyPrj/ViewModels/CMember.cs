@@ -32,6 +32,9 @@ namespace prjMyPrj.ViewModels
 
         [DisplayName("權限")]
         public string fLevel { get { return _member.fLevel; } set { _member.fLevel = value; } }
+
+        [DisplayName("帳號狀態")]
+        public string fUsing { get { return _member.fUsing; } set { _member.fUsing = value; } }
     }
     
 }

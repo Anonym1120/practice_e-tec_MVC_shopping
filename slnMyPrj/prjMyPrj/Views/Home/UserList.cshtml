@@ -1,7 +1,6 @@
 ﻿@using prjMyPrj.Models
 @model IEnumerable<prjMyPrj.ViewModels.CMember>
 
-
 @{
     ViewBag.Title = "UserList";
 }
@@ -20,6 +19,8 @@
             <td>@Html.DisplayNameFor(model => model.fName)</td>
             <td>@Html.DisplayNameFor(model => model.fEmail)</td>
             <td>@Html.DisplayNameFor(model => model.fLevel)</td>
+            <td>@Html.DisplayNameFor(model => model.fUsing)</td>
+            <td>操作</td>
         </tr>
 
         @foreach (var user in Model)
@@ -30,6 +31,8 @@
                 <td>@Html.DisplayFor(model => user.fName)</td>
                 <td>@Html.DisplayFor(model => user.fEmail)</td>
                 <td>@Html.DisplayFor(model => user.fLevel)</td>
+                <td>@Html.DisplayFor(model => user.fUsing)</td>
+                <td>@Html.ActionLink("編輯", "EditMember", new { fId = user.fId})</td>
             </tr>
         }
     </table>

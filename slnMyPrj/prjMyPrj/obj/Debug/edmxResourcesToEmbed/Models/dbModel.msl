@@ -4,6 +4,7 @@
     <EntitySetMapping Name="tMember">
       <EntityTypeMapping TypeName="myDBModel.tMember">
         <MappingFragment StoreEntitySet="tMember">
+          <ScalarProperty Name="fUsing" ColumnName="fUsing" />
           <ScalarProperty Name="fId" ColumnName="fId" />
           <ScalarProperty Name="fUserId" ColumnName="fUserId" />
           <ScalarProperty Name="fPassword" ColumnName="fPassword" />
@@ -28,6 +29,7 @@
     <EntitySetMapping Name="tProduct">
       <EntityTypeMapping TypeName="myDBModel.tProduct">
         <MappingFragment StoreEntitySet="tProduct">
+          <ScalarProperty Name="fIsApproved" ColumnName="fIsApproved" />
           <ScalarProperty Name="fId" ColumnName="fId" />
           <ScalarProperty Name="fPId" ColumnName="fPId" />
           <ScalarProperty Name="fName" ColumnName="fName" />

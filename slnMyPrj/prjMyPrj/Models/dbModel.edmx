@@ -15,6 +15,7 @@
           <Property Name="fName" Type="nvarchar" MaxLength="50" />
           <Property Name="fEmail" Type="nvarchar" MaxLength="50" />
           <Property Name="fLevel" Type="nvarchar" MaxLength="50" />
+          <Property Name="fUsing" Type="nvarchar" MaxLength="50" />
         </EntityType>
         <EntityType Name="tOrder">
           <Key>
@@ -49,6 +50,7 @@
           <Property Name="fName" Type="nvarchar" MaxLength="50" />
           <Property Name="fPrice" Type="int" />
           <Property Name="fImg" Type="nvarchar" MaxLength="50" />
+          <Property Name="fIsApproved" Type="nvarchar" MaxLength="50" />
         </EntityType>
         <EntityContainer Name="myDBModelStoreContainer">
           <EntitySet Name="tMember" EntityType="Self.tMember" Schema="dbo" store:Type="Tables" />
@@ -70,6 +72,7 @@
           <Property Name="fName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="fEmail" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="fLevel" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="fUsing" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="tOrder">
           <Key>
@@ -91,6 +94,7 @@
           <Property Name="fName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="fPrice" Type="Int32" />
           <Property Name="fImg" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="fIsApproved" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityContainer Name="dbmyDBEntities" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="tMember" EntityType="Self.tMember" />
@@ -120,6 +124,7 @@
           <EntitySetMapping Name="tMember">
             <EntityTypeMapping TypeName="myDBModel.tMember">
               <MappingFragment StoreEntitySet="tMember">
+                <ScalarProperty Name="fUsing" ColumnName="fUsing" />
                 <ScalarProperty Name="fId" ColumnName="fId" />
                 <ScalarProperty Name="fUserId" ColumnName="fUserId" />
                 <ScalarProperty Name="fPassword" ColumnName="fPassword" />
@@ -144,6 +149,7 @@
           <EntitySetMapping Name="tProduct">
             <EntityTypeMapping TypeName="myDBModel.tProduct">
               <MappingFragment StoreEntitySet="tProduct">
+                <ScalarProperty Name="fIsApproved" ColumnName="fIsApproved" />
                 <ScalarProperty Name="fId" ColumnName="fId" />
                 <ScalarProperty Name="fPId" ColumnName="fPId" />
                 <ScalarProperty Name="fName" ColumnName="fName" />

@@ -3,7 +3,6 @@
 
 @{
     ViewBag.Title = "Home Page";
-
 }
 
 <h2>商品列表</h2>
@@ -32,6 +31,7 @@
             {
                 if ((Session[CDictionary.SK_LOGINED_USER] as tMember).fLevel == "2")
                 {
+                    <td>上架</td>
                     <td>操作</td>
                     <td>操作</td>
                 }
@@ -49,7 +49,6 @@
                     @Html.ActionLink("加入購物車", "AddCart", new { fPId = item.fPId })
                 </td>
 
-
                 @if (Session[CDictionary.SK_LOGINED_USER] == null)
                 {
                 }
@@ -57,13 +56,13 @@
                 {
                     if ((Session[CDictionary.SK_LOGINED_USER] as tMember).fLevel == "2")
                     {
+                        <td>@Html.DisplayFor(modelItem => item.fIsApproved)</td>
                         <td>@Html.ActionLink("編輯", "EditProduct", new { fId = item.fId })</td>
                         <td>@Html.ActionLink("刪除", "DeleteProduct", new { fId = item.fId })</td>
                     }
                 }
 
             </tr>
-
         }
 
     </table>

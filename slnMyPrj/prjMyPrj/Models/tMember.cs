@@ -20,5 +20,6 @@ namespace prjMyPrj.Models
         public string fName { get; set; }
         public string fEmail { get; set; }
         public string fLevel { get; set; }
+        public string fUsing { get; set; }
     }
 }

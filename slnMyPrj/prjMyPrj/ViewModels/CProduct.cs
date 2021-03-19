@@ -30,5 +30,6 @@ namespace prjMyPrj.ViewModels
         [DisplayName("產品圖片")]
         public string fImg { get { return _product.fImg; } set { _product.fImg = value; } }
 
+        public string fIsApproved { get { return _product.fIsApproved; } set { _product.fIsApproved = value; } }
     }
 }

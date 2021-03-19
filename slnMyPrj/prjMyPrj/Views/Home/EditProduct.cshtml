@@ -10,16 +10,26 @@
 {
     <div>
         <input type="hidden" name="fId" value="@Model.fId" />
-
         <div>
             <p>產品編號 : @Html.EditorFor(model => model.fPId)</p>
             <p>產品名稱 : @Html.EditorFor(model => model.fName)</p>
             <p>產品價格 : @Html.EditorFor(model => model.fPrice)</p>
-
             <p><input type="file" id="fImgFile" name="fImgFile" value="上傳" align="right" /></p>
+            <p>
+                @Html.Label("上下架") : 
+                @{ 
+                    List<SelectListItem> IsApprovedList = new List<SelectListItem>()
+                    {
+                        new SelectListItem{Text = "上架", Value = "Y"},
+                        new SelectListItem{Text = "下架", Value = "N"}
+                    };
+                }
+                @Html.DropDownList("fIsApproved", IsApprovedList)
+            </p>
         </div>
         <div>
-            <input type="submit" value="送出" align="right" />
+            <p><input type="submit" value="送出" align="right" /></p>
+            @ViewBag.ImgFile
         </div>
 
     </div>

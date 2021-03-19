@@ -19,5 +19,6 @@ namespace prjMyPrj.Models
         public string fName { get; set; }
         public Nullable<int> fPrice { get; set; }
         public string fImg { get; set; }
+        public string fIsApproved { get; set; }
     }
 }
