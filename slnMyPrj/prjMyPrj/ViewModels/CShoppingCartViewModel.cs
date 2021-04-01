@@ -9,7 +9,10 @@ namespace prjMyPrj.ViewModels
 {
     public class CShoppingCartViewModel
     {
+        [Required(ErrorMessage = "請輸入收件人姓名")]
         public string fReceiver { get; set; }
+
+        [Required(ErrorMessage = "請輸入收件人地址")]
         public string fAddress { get; set; }
     }
 }

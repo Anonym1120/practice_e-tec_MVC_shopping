@@ -19,9 +19,11 @@ namespace prjMyPrj.ViewModels
         public int fId { get { return _member.fId; } set { _member.fId = value; } }
 
         [DisplayName("帳號")]
+        [Required(ErrorMessage = "請輸入帳號")]
         public string fUserId { get { return _member.fUserId; } set { _member.fUserId = value; } }
 
         [DisplayName("密碼")]
+        [Required(ErrorMessage = "請輸入密碼")]
         public string fPassword { get { return _member.fPassword; } set { _member.fPassword = value; } }
 
         [DisplayName("姓名")]

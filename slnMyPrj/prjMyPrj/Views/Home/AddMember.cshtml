@@ -11,9 +11,15 @@
     <div>
         <div>
             <p>帳號 : @Html.TextBox("fUserId")</p>
+
             <p>密碼 : @Html.TextBox("fPassword")</p>
+
             <p>姓名 : @Html.TextBox("fName")</p>
+
             <p>信箱 : @Html.TextBox("fEmail")</p>
+
+            @Html.ValidationSummary()
+
             @if (Session[CDictionary.SK_LOGINED_USER] == null)
             {
             }
@@ -26,7 +32,7 @@
                         @*@Html.DropDownList("level", new SelectList(new[] { "會員", "管理者" }))// 其一方法  *@
                         @{
                             List<SelectListItem> levelList = new List<SelectListItem>
-                            {
+                                            {
                                 new SelectListItem {Text = "會員", Value = "1" },
                                 new SelectListItem { Text = "管理者", Value = "2" }
                             };

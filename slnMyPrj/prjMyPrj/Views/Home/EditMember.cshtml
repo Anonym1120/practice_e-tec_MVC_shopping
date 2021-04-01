@@ -9,18 +9,29 @@
 
 @using (Html.BeginForm("EditMember", "Home", FormMethod.Post, new { enctype = "multipart/form-data" }))
 {
+    @Html.AntiForgeryToken()
+
     <div>
         @Html.Hidden("fId", Model.fId)
         <div>
             <p>帳號 : @Html.EditorFor(model => model.fUserId)</p>
+            <p>@Html.ValidationMessageFor(model => model.fUserId, "", new { @class = "text-danger" })</p>
+            
             <p>密碼 : @Html.EditorFor(model => model.fPassword)</p>
+            <p>@Html.ValidationMessageFor(model => model.fPassword, "", new { @class = "text-danger" })</p>
+
             <p>姓名 : @Html.EditorFor(model => model.fName)</p>
+            <p>@Html.ValidationMessageFor(model => model.fName, "", new { @class = "text-danger" })</p>
+
+            
             <p>信箱 : @Html.EditorFor(model => model.fEmail)</p>
+            <p>@Html.ValidationMessageFor(model => model.fEmail, "", new { @class = "text-danger" })</p>
+
             <p>權限 : @Html.EditorFor(model => model.fLevel)</p>
-            <p>狀態 : @Html.EditorFor(model => model.fUsing)</p>
+            <p>狀態 : @Html.EditorFor(model => model.fUsing, "", new { @class = "text-danger" })</p>
         </div>
         <div>
-            <input type="submit" value="修改"/>
+            <input type="submit" value="修改" />
         </div>
     </div>
 }

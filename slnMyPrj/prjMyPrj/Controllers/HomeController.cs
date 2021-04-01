@@ -14,6 +14,7 @@ namespace prjMyPrj.Controllers
     {
         dbmyDBEntities db = new dbmyDBEntities();
 
+
         [CLoginActionFilter(check = true)]
         public ActionResult SelectOut(string fUserId)
         {
@@ -69,7 +70,12 @@ namespace prjMyPrj.Controllers
                 .Where(m => m.fId == member.fId)
                 .FirstOrDefault();
 
-            if (user != null) 
+            if (ModelState.IsValid == false) //欄位驗證
+            {
+                return View("EditMember", "_LayoutAdmin", user);
+            }
+            
+            if (user != null)
             {
                 user.fUserId = member.fUserId;
                 user.fPassword = member.fPassword;
@@ -77,7 +83,15 @@ namespace prjMyPrj.Controllers
                 user.fEmail = member.fEmail;
                 user.fLevel = member.fLevel;
                 user.fUsing = member.fUsing;
-                db.SaveChanges();
+
+                try
+                {
+                    db.SaveChanges();
+                }
+                catch (System.Data.Entity.Validation.DbEntityValidationException ex)
+                {
+                    throw ex;
+                }
             }
 
             return RedirectToAction("UserList");
@@ -271,11 +285,11 @@ namespace prjMyPrj.Controllers
                     .Where(p => p.fPId == fPId)
                     .FirstOrDefault();
 
-                string guid = Guid.NewGuid().ToString();
+                //string guid = Guid.NewGuid().ToString();
 
                 tOrderDetail od = new tOrderDetail();
                 od.fUserId = user;
-                od.fOrderId = guid;
+                //od.fOrderId = guid;
                 od.fPId = product.fPId;
                 od.fName = product.fName;
                 od.fPrice = product.fPrice;
@@ -315,6 +329,7 @@ namespace prjMyPrj.Controllers
 
             foreach (var item in cart)
             {
+                item.fOrderId = guid;
                 item.fIsApproved = "Y";
             }
 
@@ -383,19 +398,25 @@ namespace prjMyPrj.Controllers
                 .Where(u => u.fUserId == userId && u.fPassword == password && u.fUsing == "N")
                 .FirstOrDefault();
 
-            if (member == null)
+            if (Using != null)
             {
-                ViewBag.Message = "請重新輸入帳號密碼";
+                ViewBag.Message2 = "帳號已被停權";
                 return View();
             }
-            else 
-            {
-                if (Using != null) 
-                {
-                    ViewBag.Message2 = "帳號已被停權";
-                    return View();
-                }
-            }
+
+            //if (member == null)
+            //{
+            //    ViewBag.Message = "請重新輸入帳號密碼";
+            //    return View();
+            //}
+            //else 
+            //{
+            //    if (Using != null) 
+            //    {
+            //        ViewBag.Message2 = "帳號已被停權";
+            //        return View();
+            //    }
+            //}
             Session[CDictionary.SK_LOGINED_USER] = member;
 
             return RedirectToAction("Index");
@@ -414,13 +435,17 @@ namespace prjMyPrj.Controllers
                 .Where(u => u.fUserId == m.fUserId)
                 .FirstOrDefault();
 
-            if (string.IsNullOrEmpty(m.fUserId)) 
-            {
-                ViewBag.message = "請重新輸入帳號";
+            //List<CMember> list = new List<CMember>();
+            //foreach (tMember mem in userId) 
+            //{
+            //    list.Add(new CMember(mem));
+            //}
 
+            if (ModelState.IsValid == false) 
+            {
                 return View("AddMember", "_Layout");
             }
-
+            
             if (userId != null) 
             {
                 ViewBag.message2 = "已申請過，請重新輸入帳號。";
